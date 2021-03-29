@@ -22,8 +22,8 @@ jobs:
        - name: Set variables
          id: setvars
          run: |
-            if [[ "${{github.base_ref}}" == "main" || "${{github.ref}}" == "refs/heads/main]; then
-               echo "::set-output name=ecs_cluster::questy-oldprod-cluster"
+            if [[ "${{github.base_ref}}" == "main" || "${{github.ref}}" == "refs/heads/main" ]]; then
+               echo "::set-output name=ecs_cluster::questy-old-main"
                echo "::set-output name=ecs_service::questy_oldprod"
             fi
 
