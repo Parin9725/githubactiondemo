@@ -1,6 +1,6 @@
 name: The showdown
 on:
-  push: main
+  push: master
 jobs:
   if_condition:
     runs-on: ubuntu-latest
