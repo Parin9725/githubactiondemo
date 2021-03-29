@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
        - uses: actions/checkout@v2
-       - run: echo "You are in Main Branch :)"  && echo ${{ GITHUB_WORKFLOW }}
+       - run: echo "You are in Main Branch :)"  && echo $GITHUB_WORKFLOW
          name: IF
-         if: contains(github.ref, 'main')
+         if: github.ref == 'main'
        - run: echo "You are not in dev branch :("
          name: Else
          if: contains(github.ref, 'dev')
