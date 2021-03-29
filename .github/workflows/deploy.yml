@@ -8,6 +8,10 @@ name: if_else_test
 jobs:
   if_condition:
     runs-on: ubuntu-latest
+    outputs:
+         ecs_cluster: ${{ steps.setvars.outputs.ecs_cluster }}
+         ecs_service: ${{ steps.setvars.outputs.ecs_service }}
+
     steps:
        - uses: actions/checkout@v2
        - run: echo "You are in Main Branch :)"  && echo $github.workflow
@@ -15,4 +19,23 @@ jobs:
          if: github.ref == 'refs/heads/main'
        - run: echo "You are not in dev branch :("
          name: Else
-         if: github.ref != 'refs/heads/dev'
+       - name: Set variables
+         id: setvars
+         run: |
+            if [[ "${{github.base_ref}}" == "main" || "${{github.ref}}" == "refs/heads/main]; then
+               echo "::set-output name=ecs_cluster::questy-oldprod-cluster"
+               echo "::set-output name=ecs_service::questy_oldprod"
+            fi
+
+            if [[ "${{github.base_ref}}" == "dev" || "${{github.ref}}" == "refs/heads/dev" ]]; then
+               echo "::set-output name=ecs_cluster::my-project-dev"
+               echo "::set-output name=ecs_service::questy_oldprod"
+            fi
+
+  print:
+    runs-on: ubuntu-latest
+    needs: if_condition
+    steps:
+      - name: Print
+        run: echo "gcloud_project=${{needs.if_condition.outputs.ecs_cluster}}" && echo "gcloud_project=${{needs.if_condition.outputs.ecs_service}}"
+ 
