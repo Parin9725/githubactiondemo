@@ -5,6 +5,7 @@ jobs:
   if_condition:
     runs-on: ubuntu-latest
     steps:
+       - uses: actions/checkout@v2
        - run: echo "You are in Main Branch :)"
          name:IF
          if: ${GITHUB_REF##*/} == "main"
