@@ -14,20 +14,20 @@ jobs:
 
     steps:
        - uses: actions/checkout@v2
-       - run: echo "You are in Main Branch :)"  && echo $github.workflow
+       - run: echo "You are in Main Branch :)"  && echo "${{outputs.ecs_cluster}}"
          name: IF
          if: github.ref == 'refs/heads/main'
-       - run: echo "You are not in dev branch :("
+       - run: echo "You are not in dev branch :(" && echo "${{outputs.ecs_cluster}}"
          name: Else
        - name: Set variables
          id: setvars
          run: |
-            if [[ "${{github.base_ref}}" == "main" || "${{github.ref}}" == "refs/heads/main" ]]; then
+            if [[ "${{github.base_ref}}" == "dev" || "${{github.ref}}" == "refs/heads/dev" ]]; then
                echo "::set-output name=ecs_cluster::questy-old-main"
                echo "::set-output name=ecs_service::questy_oldprod"
             fi
 
-            if [[ "${{github.base_ref}}" == "dev" || "${{github.ref}}" == "refs/heads/dev" ]]; then
+            if [[ "${{github.base_ref}}" == "main" || "${{github.ref}}" == "refs/heads/main" ]]; then
                echo "::set-output name=ecs_cluster::my-project-dev"
                echo "::set-output name=ecs_service::questy_oldprod"
             fi
@@ -37,5 +37,5 @@ jobs:
     needs: if_condition
     steps:
       - name: Print
-        run: echo "gcloud_project=${{needs.if_condition.outputs.ecs_cluster}}" && echo "gcloud_project=${{needs.if_condition.outputs.ecs_service}}"
+        run: echo "ecs_cluster=${{needs.if_condition.outputs.ecs_cluster}}" && echo "ecs_service=${{needs.if_condition.outputs.ecs_service}}"
  
