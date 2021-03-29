@@ -5,9 +5,9 @@ jobs:
   if_condition:
     runs-on: ubuntu-latest
     steps:
-       - if: ${GITHUB_REF##*/} == "main"
+       - run: echo "You are in Main Branch :)"
          name:IF
-         run: echo "You are in Main Branch :)"
+         if: ${GITHUB_REF##*/} == "main"
        - if: ${GITHUB_REF##*/} != "main"
          name: Else
          run: echo "You are not in main Branch :("
