@@ -1,0 +1,13 @@
+name: The showdown
+on:
+  push: {}
+jobs:
+  if_condition:
+    runs-on: ubuntu-latest
+    steps:
+       - if: ${GITHUB_REF##*/} == "main"
+         name:IF
+         run: echo "You are in Main Branch :)"
+       - if: ${GITHUB_REF##*/} != "main"
+         name: Else
+         run: echo "You are not in main Branch :("
