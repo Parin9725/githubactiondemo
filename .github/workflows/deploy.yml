@@ -7,8 +7,8 @@ jobs:
     steps:
        - uses: actions/checkout@v2
        - run: echo "You are in Main Branch :)"
-         name:IF
-         if: ${GITHUB_REF##*/} == "main"
+         name: IF
+         if: contains(github.ref, "main")
        - if: ${GITHUB_REF##*/} != "main"
          name: Else
          run: echo "You are not in main Branch :("
