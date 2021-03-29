@@ -14,10 +14,10 @@ jobs:
 
     steps:
        - uses: actions/checkout@v2
-       - run: echo "You are in Main Branch :)"  && echo "${{outputs.ecs_cluster}}"
+       - run: echo "You are in Main Branch :)"
          name: IF
          if: github.ref == 'refs/heads/main'
-       - run: echo "You are not in dev branch :(" && echo "${{outputs.ecs_cluster}}"
+       - run: echo "You are not in dev branch :("
          name: Else
        - name: Set variables
          id: setvars
